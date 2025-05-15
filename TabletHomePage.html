@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en" class="dark-mode">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyHome Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    /* Global Styles */
+    :root {
+      --primary-color: #9b87f5;
+      --primary-dark: #7e69ab;
+      --secondary-color: #f1f0fb;
+      --text-color: #403e43;
+      --light-text: #8a898c;
+      --white: #ffffff;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    .dark-mode {
+      --primary-color: #b3a2f7;
+      --primary-dark: #8f7cc5;
+      --secondary-color: #222232;
+      --text-color: #e0e0e0;
+      --light-text: #a0a0a0;
+      --white: #2a2a3a;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--secondary-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      padding-bottom: 2rem;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Header & Navigation */
+    header {
+      background-color: var(--white);
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .main-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    .nav-links {
+      display: flex;
+    }
+
+    .nav-item {
+      position: relative;
+      margin-left: 1.5rem;
+    }
+
+    .nav-item a {
+      padding: 0.5rem;
+      font-weight: 500;
+      color: var(--text-color);
+      transition: var(--transition);
+    }
+
+    .nav-item a:hover,
+    .nav-item a.active {
+      color: var(--primary-color);
+    }
+
+    .theme-toggle {
+      margin-left: 1.5rem;
+    }
+
+    .theme-toggle button {
+      background: none;
+      border: none;
+      color: var(--text-color);
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: var(--transition);
+    }
+
+    .theme-toggle button:hover {
+      color: var(--primary-color);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .mobile-menu-btn span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background-color: var(--text-color);
+      margin: 5px 0;
+      transition: var(--transition);
+    }
+
+    /* Main Content */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    section {
+      margin-bottom: 2.5rem;
+    }
+
+    h2 {
+      margin-bottom: 1.5rem;
+      color: var(--primary-dark);
+      font-weight: 600;
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+
+    h2::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 3px;
+      width: 50px;
+      background-color: var(--primary-color);
+    }
+
+    /* Search Section */
+    .search-section {
+      text-align: center;
+      padding: 2rem 0;
+    }
+
+    .search-container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .search-engines {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .search-engine-btn {
+      background: none;
+      border: none;
+      padding: 0.5rem 1rem;
+      margin: 0 0.5rem;
+      cursor: pointer;
+      color: var(--light-text);
+      font-weight: 500;
+      border-radius: 20px;
+      transition: var(--transition);
+    }
+
+    .search-engine-btn.active,
+    .search-engine-btn:hover {
+      background-color: var(--primary-color);
+      color: var(--white);
+    }
+
+    .search-form {
+      display: flex;
+      box-shadow: var(--shadow);
+      border-radius: 30px;
+      overflow: hidden;
+      background-color: var(--white);
+    }
+
+    #search-input {
+      flex: 1;
+      padding: 1rem 1.5rem;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      background-color: var(--white);
+      color: var(--text-color);
+    }
+
+    #search-button {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 0 1.5rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    #search-button:hover {
+      background-color: var(--primary-dark);
+    }
+
+    /* Bookmarks Section */
+    .bookmarks-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .bookmark-item {
+      width: 80px;
+      height: 80px;
+      background-color: var(--white);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .bookmark-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .bookmark-icon {
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .bookmark-title {
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-align: center;
+      padding: 0 0.5rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%;
+    }
+
+    .add-bookmark button {
+      background: none;
+      border: 2px dashed var(--light-text);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--light-text);
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .add-bookmark button:hover {
+      border-color: var(--primary-color);
+      color: var(--primary-color);
+    }
+
+    .bookmark-delete {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: rgba(255, 255, 255, 0.7);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      color: #ea384c;
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .bookmark-item:hover .bookmark-delete {
+      opacity: 1;
+    }
+
+    /* Links Section */
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .link-card {
+      background-color: var(--white);
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .link-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .link-icon {
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+
+    .link-title {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .link-description {
+      color: var(--light-text);
+      font-size: 0.9rem;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background-color: var(--white);
+      margin: 10% auto;
+      padding: 2rem;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--light-text);
+      transition: var(--transition);
+    }
+
+    .close-modal:hover {
+      color: var(--text-color);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+      background-color: var(--white);
+      color: var(--text-color);
+    }
+
+    .icon-suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .icon-suggestions span {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--secondary-color);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .icon-suggestions span:hover {
+      background-color: var(--primary-color);
+      color: var(--white);
+    }
+
+    .submit-btn {
+      background-color: var(--primary-color);
+      color: var(--white);
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      width: 100%;
+    }
+
+    .submit-btn:hover {
+      background-color: var(--primary-dark);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .main-nav {
+        padding: 1rem;
+      }
+
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--white);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-links.show {
+        display: flex;
+      }
+
+      .nav-item {
+        margin-left: 0;
+        padding: 1rem;
+        border-bottom: 1px solid #f0f0f0;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .mobile-menu-btn.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 6px);
+      }
+
+      .mobile-menu-btn.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .mobile-menu-btn.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -6px);
+      }
+
+      .theme-toggle {
+        margin-left: auto;
+        margin-right: 1rem;
+      }
+
+      main {
+        padding: 1.5rem;
+      }
+
+      .links-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-content {
+        margin: 20% auto;
+        padding: 1.5rem;
+      }
+    }
+
+    /* Tablet-specific styles */
+    @media screen and (min-width: 600px) and (max-width: 1024px) {
+      /* Portrait orientation for tablets */
+      @media (orientation: portrait) {
+        .links-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .bookmarks-container {
+          justify-content: center;
+        }
+      }
+
+      /* Landscape orientation for tablets */
+      @media (orientation: landscape) {
+        .links-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+    }
+
+    /* Specific to your 8.7" tablet */
+    @media screen and (max-width: 1024px) {
+
+      /* Add any specific styles for your tablet size here */
+      .search-container {
+        width: 90%;
+      }
+    }
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Navigation menu toggle for mobile
+      const mobileMenuBtn = document.querySelector(".mobile-menu-btn");
+      const navLinks = document.querySelector(".nav-links");
+
+      mobileMenuBtn.addEventListener("click", function () {
+        navLinks.classList.toggle("show");
+        this.classList.toggle("active");
+      });
+
+      // Search engine selection
+      const searchEngineButtons =
+        document.querySelectorAll(".search-engine-btn");
+      const searchInput = document.getElementById("search-input");
+      const searchButton = document.getElementById("search-button");
+      let currentEngine = "brave";
+
+      searchEngineButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+          searchEngineButtons.forEach((btn) =>
+            btn.classList.remove("active")
+          );
+          this.classList.add("active");
+          currentEngine = this.dataset.engine;
+          updateSearchPlaceholder();
+        });
+      });
+
+      function updateSearchPlaceholder() {
+        const placeholders = {
+          brave: "Search with Brave...",
+          google: "Search with Google...",
+          duckduckgo: "Search with DuckDuckGo...",
+        };
+        searchInput.placeholder = placeholders[currentEngine];
+      }
+
+      updateSearchPlaceholder();
+
+      // Search functionality
+      searchButton.addEventListener("click", performSearch);
+
+      searchInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+          performSearch();
+        }
+      });
+
+      function performSearch() {
+        const query = searchInput.value.trim();
+
+        if (!query) return;
+
+        const searchUrls = {
+          brave: "https://search.brave.com/search?q=",
+          google: "https://www.google.com/search?q=",
+          duckduckgo: "https://duckduckgo.com/?q=",
+        };
+
+        window.open(
+          searchUrls[currentEngine] + encodeURIComponent(query),
+          "_blank"
+        );
+      }
+
+      // Bookmarks functionality
+      const addBookmarkBtn = document.getElementById("add-bookmark-btn");
+      const bookmarkModal = document.getElementById("bookmark-modal");
+      const closeModal = document.querySelector(".close-modal");
+      const bookmarkForm = document.getElementById("bookmark-form");
+      const bookmarksContainer = document.querySelector(
+        ".bookmarks-container"
+      );
+      const iconSuggestions = document.querySelectorAll(
+        ".icon-suggestions span"
+      );
+      const bookmarkIconInput = document.getElementById("bookmark-icon");
+
+      // Load saved bookmarks
+      loadBookmarks();
+
+      if (addBookmarkBtn) {
+        addBookmarkBtn.addEventListener("click", function () {
+          bookmarkModal.style.display = "block";
+        });
+      }
+
+      if (closeModal) {
+        closeModal.addEventListener("click", function () {
+          bookmarkModal.style.display = "none";
+        });
+      }
+
+      window.addEventListener("click", function (e) {
+        if (bookmarkModal && e.target === bookmarkModal) {
+          bookmarkModal.style.display = "none";
+        }
+      });
+
+      if (bookmarkForm) {
+        bookmarkForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const title = document
+            .getElementById("bookmark-title")
+            .value.trim();
+          const url = document.getElementById("bookmark-url").value.trim();
+          let icon = bookmarkIconInput.value.trim();
+
+          // Default icon if none selected
+          if (!icon) {
+            icon = "fas fa-globe";
+          }
+
+          addBookmark(title, url, icon);
+
+          // Clear form and close modal
+          bookmarkForm.reset();
+          bookmarkModal.style.display = "none";
+        });
+      }
+
+      if (iconSuggestions) {
+        iconSuggestions.forEach((suggestion) => {
+          suggestion.addEventListener("click", function () {
+            bookmarkIconInput.value = this.dataset.icon;
+          });
+        });
+      }
+
+      function addBookmark(title, url, icon) {
+        // Create bookmark
+        const bookmark = {
+          id: Date.now(),
+          title: title,
+          url: url,
+          icon: icon,
+        };
+
+        // Add to local storage
+        let bookmarks = getBookmarks();
+        bookmarks.push(bookmark);
+        localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+
+        // Add to DOM
+        createBookmarkElement(bookmark);
+      }
+
+      function createBookmarkElement(bookmark) {
+        if (!bookmarksContainer) return;
+
+        const bookmarkElement = document.createElement("div");
+        bookmarkElement.className = "bookmark-item";
+        bookmarkElement.dataset.id = bookmark.id;
+
+        bookmarkElement.innerHTML = `
+      <a href="${bookmark.url}" target="_blank">
+        <div class="bookmark-icon"><i class="${bookmark.icon}"></i></div>
+        <div class="bookmark-title">${bookmark.title}</div>
+      </a>
+      <div class="bookmark-delete"><i class="fas fa-times"></i></div>
+    `;
+
+        const deleteBtn = bookmarkElement.querySelector(".bookmark-delete");
+        deleteBtn.addEventListener("click", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          deleteBookmark(bookmark.id);
+        });
+
+        // Insert before the add button
+        if (addBookmarkBtn && addBookmarkBtn.parentElement) {
+          bookmarksContainer.insertBefore(
+            bookmarkElement,
+            addBookmarkBtn.parentElement
+          );
+        } else {
+          bookmarksContainer.appendChild(bookmarkElement);
+        }
+      }
+
+      function deleteBookmark(id) {
+        // Remove from local storage
+        let bookmarks = getBookmarks();
+        bookmarks = bookmarks.filter((bookmark) => bookmark.id !== id);
+        localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+
+        // Remove from DOM
+        const bookmarkElement = document.querySelector(
+          `.bookmark-item[data-id="${id}"]`
+        );
+        if (bookmarkElement) {
+          bookmarkElement.remove();
+        }
+      }
+
+      function getBookmarks() {
+        return JSON.parse(localStorage.getItem("bookmarks")) || [];
+      }
+
+      function loadBookmarks() {
+        if (!bookmarksContainer) return;
+
+        const bookmarks = getBookmarks();
+        bookmarks.forEach((bookmark) => {
+          createBookmarkElement(bookmark);
+        });
+      }
+
+      // Theme toggle functionality
+      const themeToggleBtn = document.getElementById("theme-toggle-btn");
+      const htmlElement = document.documentElement;
+
+      // Check user preference
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") {
+        htmlElement.classList.remove("light-mode");
+        htmlElement.classList.add("dark-mode");
+        if (themeToggleBtn) {
+          themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+      } else {
+        htmlElement.classList.add("light-mode");
+        htmlElement.classList.remove("dark-mode");
+      }
+
+      if (themeToggleBtn) {
+        themeToggleBtn.addEventListener("click", function () {
+          if (htmlElement.classList.contains("dark-mode")) {
+            htmlElement.classList.remove("dark-mode");
+            htmlElement.classList.add("light-mode");
+            localStorage.setItem("theme", "light");
+            this.innerHTML = '<i class="fas fa-moon"></i>';
+          } else {
+            htmlElement.classList.remove("light-mode");
+            htmlElement.classList.add("dark-mode");
+            localStorage.setItem("theme", "dark");
+            this.innerHTML = '<i class="fas fa-sun"></i>';
+          }
+        });
+      }
+
+      // Window resize handling
+      window.addEventListener("resize", function () {
+        if (window.innerWidth > 768) {
+          if (navLinks) {
+            navLinks.classList.remove("show");
+          }
+          if (mobileMenuBtn) {
+            mobileMenuBtn.classList.remove("active");
+          }
+        }
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <header>
+    <nav class="main-nav">
+      <div class="logo">HomePageProject</div>
+      <div class="theme-toggle">
+        <button id="theme-toggle-btn">
+          <i class="fas fa-sun"></i>
+        </button>
+      </div>
+      <button class="mobile-menu-btn"></button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="search-section">
+      <div class="search-container">
+        <div class="search-engines">
+          <button class="search-engine-btn active" data-engine="brave">
+            Brave
+          </button>
+          <button class="search-engine-btn" data-engine="google">
+            Google
+          </button>
+          <button class="search-engine-btn" data-engine="duckduckgo">
+            DuckDuckGo
+          </button>
+        </div>
+        <div class="search-form">
+          <input type="text" id="search-input" placeholder="Search with Brave..." />
+          <button id="search-button"><i class="fas fa-search"></i></button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Bookmarks</h2>
+      <div class="bookmarks-container">
+        <!-- Bookmarks will be loaded here dynamically -->
+        <div class="bookmark-item add-bookmark">
+          <button id="add-bookmark-btn">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+    <h2>Android Development</h2>
+    <div class="links-grid">
+      <a href="https://www.youtube.com/watch?v=TclK5gNM_PM" class="link-card" target="_blank">
+        <div class="link-icon"><i class="fa-brands fa-youtube"></i></div>
+        <div class="link-title">Flutter - Mitch Koko</div>
+        <div class="link-description">
+          FULL Flutter Masterclass: Beginner to Pro
+        </div>
+      </a>
+    </div>
+    <h2>Unity Development</h2>
+    <div class="links-grid">
+      <a href="https://www.gamedev.tv/courses/unity6-complete-3d/view" class="link-card" target="_blank">
+        <div class="link-icon"><i class="fa-brands fa-unity"></i></div>
+        <div class="link-title">Unity - GameDev.TV</div>
+        <div class="link-description">
+          Complete Unity 3D Developer: Design & Develop Games in Unity 6 using
+          C#
+        </div>
+      </a>
+    </div>
+
+    <!-- Modal for adding bookmarks -->
+    <div id="bookmark-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal" style="margin-top: -20px">&times;</span>
+        <h2>Add Bookmark</h2>
+        <form id="bookmark-form">
+          <div class="form-group">
+            <label for="bookmark-title">Title</label>
+            <input type="text" id="bookmark-title" required />
+          </div>
+          <div class="form-group">
+            <label for="bookmark-url">URL</label>
+            <input type="url" id="bookmark-url" required />
+          </div>
+          <div class="form-group">
+            <label for="bookmark-icon">Icon (Font Awesome class)</label>
+            <input type="text" id="bookmark-icon" placeholder="fas fa-globe" />
+            <div class="icon-suggestions">
+              <!-- Web & Browsing -->
+              <span data-icon="fas fa-globe"><i class="fas fa-globe"></i></span>
+              <span data-icon="fas fa-wifi"><i class="fas fa-wifi"></i></span>
+              <span data-icon="fas fa-search"><i class="fas fa-search"></i></span>
+              <span data-icon="fas fa-home"><i class="fas fa-home"></i></span>
+              <span data-icon="fas fa-link"><i class="fas fa-link"></i></span>
+              <span data-icon="fas fa-window-maximize"><i class="fas fa-window-maximize"></i></span>
+              <span data-icon="fas fa-window-restore"><i class="fas fa-window-restore"></i></span>
+              <span data-icon="fas fa-external-link-alt"><i class="fas fa-external-link-alt"></i></span>
+              <span data-icon="fas fa-history"><i class="fas fa-history"></i></span>
+              <span data-icon="fas fa-star"><i class="fas fa-star"></i></span>
+
+              <!-- Documents & Files -->
+              <span data-icon="fas fa-file"><i class="fas fa-file"></i></span>
+              <span data-icon="fas fa-file-alt"><i class="fas fa-file-alt"></i></span>
+              <span data-icon="fas fa-file-pdf"><i class="fas fa-file-pdf"></i></span>
+              <span data-icon="fas fa-file-word"><i class="fas fa-file-word"></i></span>
+              <span data-icon="fas fa-file-excel"><i class="fas fa-file-excel"></i></span>
+              <span data-icon="fas fa-file-powerpoint"><i class="fas fa-file-powerpoint"></i></span>
+              <span data-icon="fas fa-file-archive"><i class="fas fa-file-archive"></i></span>
+              <span data-icon="fas fa-file-image"><i class="fas fa-file-image"></i></span>
+              <span data-icon="fas fa-file-audio"><i class="fas fa-file-audio"></i></span>
+              <span data-icon="fas fa-file-video"><i class="fas fa-file-video"></i></span>
+
+              <!-- Media & Entertainment -->
+              <span data-icon="fab fa-youtube"><i class="fab fa-youtube"></i></span>
+              <span data-icon="fas fa-play"><i class="fas fa-play"></i></span>
+              <span data-icon="fas fa-film"><i class="fas fa-film"></i></span>
+              <span data-icon="fas fa-music"><i class="fas fa-music"></i></span>
+              <span data-icon="fas fa-podcast"><i class="fas fa-podcast"></i></span>
+              <span data-icon="fas fa-gamepad"><i class="fas fa-gamepad"></i></span>
+              <span data-icon="fas fa-headphones"><i class="fas fa-headphones"></i></span>
+              <span data-icon="fas fa-tv"><i class="fas fa-tv"></i></span>
+              <span data-icon="fas fa-photo-video"><i class="fas fa-photo-video"></i></span>
+              <span data-icon="fas fa-camera"><i class="fas fa-camera"></i></span>
+
+              <!-- Computer & Tech -->
+              <span data-icon="fas fa-laptop"><i class="fas fa-laptop"></i></span>
+              <span data-icon="fas fa-desktop"><i class="fas fa-desktop"></i></span>
+              <span data-icon="fas fa-server"><i class="fas fa-server"></i></span>
+              <span data-icon="fas fa-database"><i class="fas fa-database"></i></span>
+              <span data-icon="fas fa-microchip"><i class="fas fa-microchip"></i></span>
+              <span data-icon="fas fa-memory"><i class="fas fa-memory"></i></span>
+              <span data-icon="fas fa-hdd"><i class="fas fa-hdd"></i></span>
+              <span data-icon="fas fa-keyboard"><i class="fas fa-keyboard"></i></span>
+              <span data-icon="fas fa-mouse"><i class="fas fa-mouse"></i></span>
+              <span data-icon="fas fa-print"><i class="fas fa-print"></i></span>
+
+              <!-- User & Social -->
+              <span data-icon="fas fa-user"><i class="fas fa-user"></i></span>
+              <span data-icon="fas fa-users"><i class="fas fa-users"></i></span>
+              <span data-icon="fas fa-user-circle"><i class="fas fa-user-circle"></i></span>
+              <span data-icon="fas fa-id-card"><i class="fas fa-id-card"></i></span>
+              <span data-icon="fas fa-address-book"><i class="fas fa-address-book"></i></span>
+              <span data-icon="fas fa-user-friends"><i class="fas fa-user-friends"></i></span>
+              <span data-icon="fas fa-user-plus"><i class="fas fa-user-plus"></i></span>
+              <span data-icon="fas fa-user-edit"><i class="fas fa-user-edit"></i></span>
+              <span data-icon="fas fa-user-shield"><i class="fas fa-user-shield"></i></span>
+              <span data-icon="fas fa-user-tie"><i class="fas fa-user-tie"></i></span>
+
+              <!-- Web Development -->
+              <span data-icon="fas fa-code"><i class="fas fa-code"></i></span>
+              <span data-icon="fab fa-html5"><i class="fab fa-html5"></i></span>
+              <span data-icon="fab fa-css3-alt"><i class="fab fa-css3-alt"></i></span>
+              <span data-icon="fab fa-js"><i class="fab fa-js"></i></span>
+              <span data-icon="fab fa-git-alt"><i class="fab fa-git-alt"></i></span>
+              <span data-icon="fab fa-github"><i class="fab fa-github"></i></span>
+              <span data-icon="fab fa-gitlab"><i class="fab fa-gitlab"></i></span>
+              <span data-icon="fab fa-node-js"><i class="fab fa-node-js"></i></span>
+              <span data-icon="fab fa-react"><i class="fab fa-react"></i></span>
+              <span data-icon="fab fa-vuejs"><i class="fab fa-vuejs"></i></span>
+
+              <!-- E-commerce & Shopping -->
+              <span data-icon="fas fa-shopping-cart"><i class="fas fa-shopping-cart"></i></span>
+              <span data-icon="fas fa-credit-card"><i class="fas fa-credit-card"></i></span>
+              <span data-icon="fas fa-tags"><i class="fas fa-tags"></i></span>
+              <span data-icon="fas fa-box"><i class="fas fa-box"></i></span>
+              <span data-icon="fas fa-truck"><i class="fas fa-truck"></i></span>
+              <span data-icon="fas fa-store"><i class="fas fa-store"></i></span>
+              <span data-icon="fas fa-receipt"><i class="fas fa-receipt"></i></span>
+              <span data-icon="fas fa-percent"><i class="fas fa-percent"></i></span>
+              <span data-icon="fas fa-gift"><i class="fas fa-gift"></i></span>
+              <span data-icon="fas fa-coins"><i class="fas fa-coins"></i></span>
+
+              <!-- Communication -->
+              <span data-icon="fas fa-envelope"><i class="fas fa-envelope"></i></span>
+              <span data-icon="fas fa-comment"><i class="fas fa-comment"></i></span>
+              <span data-icon="fas fa-comments"><i class="fas fa-comments"></i></span>
+              <span data-icon="fas fa-phone"><i class="fas fa-phone"></i></span>
+              <span data-icon="fas fa-video"><i class="fas fa-video"></i></span>
+              <span data-icon="fas fa-sms"><i class="fas fa-sms"></i></span>
+              <span data-icon="fas fa-mail-bulk"><i class="fas fa-mail-bulk"></i></span>
+              <span data-icon="fas fa-bell"><i class="fas fa-bell"></i></span>
+              <span data-icon="fas fa-bell-slash"><i class="fas fa-bell-slash"></i></span>
+              <span data-icon="fas fa-comment-alt"><i class="fas fa-comment-alt"></i></span>
+
+              <!-- Additional Icons -->
+              <span data-icon="fas fa-book"><i class="fas fa-book"></i></span>
+              <span data-icon="fas fa-newspaper"><i class="fas fa-newspaper"></i></span>
+              <span data-icon="fas fa-image"><i class="fas fa-image"></i></span>
+              <span data-icon="fas fa-download"><i class="fas fa-download"></i></span>
+              <span data-icon="fas fa-upload"><i class="fas fa-upload"></i></span>
+              <span data-icon="fas fa-save"><i class="fas fa-save"></i></span>
+              <span data-icon="fas fa-trash"><i class="fas fa-trash"></i></span>
+              <span data-icon="fas fa-edit"><i class="fas fa-edit"></i></span>
+              <span data-icon="fas fa-cog"><i class="fas fa-cog"></i></span>
+              <span data-icon="fas fa-tools">
+                <i class="fas fa-tools"></i>
+              </span>
+            </div>
+          </div>
+          <button type="submit" class="submit-btn">Add Bookmark</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
